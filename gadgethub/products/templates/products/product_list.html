@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Products{% endblock %}
+{% block content %}
+<h1>Products</h1>
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-auto">
+        <input type="text" name="q" value="{{ query }}" class="form-control" placeholder="Search...">
+    </div>
+    <div class="col-auto">
+        <select name="category" class="form-select">
+            <option value="">All categories</option>
+            {% for value, label in categories %}
+            <option value="{{ value }}" {% if request.GET.category == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-primary" type="submit">Filter</button>
+    </div>
+</form>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for product in products %}
+    <div class="col">
+        <div class="card h-100">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="card-img-top" style="height:180px;object-fit:cover;">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text text-muted">{{ product.brand }}</p>
+                <p class="card-text fw-bold">${{ product.price }}</p>
+                <a href="{% url 'products:detail' product.slug %}" class="btn btn-outline-primary btn-sm">View</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No products found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

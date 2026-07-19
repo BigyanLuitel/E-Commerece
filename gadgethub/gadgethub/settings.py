@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'products',
 ]
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -56,7 +57,7 @@ ROOT_URLCONF = 'gadgethub.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -104,7 +105,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'products:list'
+LOGOUT_REDIRECT_URL = 'products:list'
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 

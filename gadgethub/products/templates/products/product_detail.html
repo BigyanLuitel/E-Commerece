@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }}{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-5">
+        {% if product.image %}
+        <img src="{{ product.image.url }}" class="img-fluid rounded">
+        {% endif %}
+    </div>
+    <div class="col-md-7">
+        <h1>{{ product.name }}</h1>
+        <p class="text-muted">{{ product.brand }} · {{ product.get_category_display }}</p>
+        <h3 class="text-primary">${{ product.price }}</h3>
+        <p>{{ product.description|linebreaks }}</p>
+
+        {% if product.specs %}
+        <table class="table table-sm">
+            {% for key, value in product.specs.items %}
+            <tr><th>{{ key }}</th><td>{{ value }}</td></tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+
+        {% if product.in_stock %}
+        <span class="badge bg-success">{{ product.stock }} in stock</span>
+        {% else %}
+        <span class="badge bg-danger">Out of stock</span>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
