@@ -1,2 +1,2 @@
 # E-Commerece
-Sixth Semester E-commerce project 
+Sixth Semester E-commerce project, using Django
