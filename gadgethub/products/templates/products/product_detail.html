@@ -20,12 +20,26 @@
             {% endfor %}
         </table>
         {% endif %}
+{% if product.in_stock %}
+<p><span class="badge bg-success">{{ product.stock }} in stock</span></p>
 
-        {% if product.in_stock %}
-        <span class="badge bg-success">{{ product.stock }} in stock</span>
-        {% else %}
-        <span class="badge bg-danger">Out of stock</span>
-        {% endif %}
+{% if user.is_authenticated %}
+<form method="post" action="{% url 'cart:add' product.id %}" class="row g-2 align-items-center">
+    {% csrf_token %}
+    <div class="col-auto">
+        <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control" style="width:90px;">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Add to Cart</button>
+    </div>
+</form>
+{% else %}
+<a href="{% url 'accounts:login' %}" class="btn btn-outline-primary">Login to purchase</a>
+{% endif %}
+
+{% else %}
+<span class="badge bg-danger">Out of stock</span>
+{% endif %}
     </div>
 </div>
 {% endblock %}
