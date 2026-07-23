@@ -1,0 +1,112 @@
+.dash-body {
+    background-color: var(--paper);
+    margin: 0;
+}
+
+.dash-shell {
+    display: flex;
+    min-height: 100vh;
+}
+.dash-form {
+    max-width: 560px;
+    background-color: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 1.75rem;
+}
+
+.dash-sidebar {
+    width: 240px;
+    background-color: var(--ink);
+    color: #E6E8EC;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1.25rem;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.dash-brand {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 2rem;
+}
+.dash-brand span {
+    color: var(--accent);
+    font-weight: 500;
+    font-size: 0.85rem;
+    display: block;
+}
+
+.dash-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+}
+
+.dash-link {
+    color: #B9BEC8;
+    text-decoration: none;
+    padding: 0.6rem 0.75rem;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+.dash-link:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: #fff;
+}
+.dash-link.active {
+    background-color: var(--accent);
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.dash-link-ai {
+    border: 1px dashed rgba(242, 169, 0, 0.5);
+}
+
+.dash-sidebar-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+    font-size: 0.85rem;
+}
+.dash-user {
+    color: #B9BEC8;
+    word-break: break-all;
+}
+
+.dash-main {
+    flex: 1;
+    padding: 2.5rem;
+    max-width: 1200px;
+}
+
+.stat-card {
+    background-color: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 1.25rem;
+}
+.stat-card.stat-warn {
+    border-color: #F2A900;
+    background-color: #FFF8E8;
+}
+.stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.4rem;
+}
+.stat-value {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 1.75rem;
+    color: var(--ink);
+}

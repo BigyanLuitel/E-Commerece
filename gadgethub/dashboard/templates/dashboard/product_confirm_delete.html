@@ -1,0 +1,11 @@
+{% extends "dashboard_base.html" %}
+{% block title %}Delete {{ product.name }}{% endblock %}
+{% block content %}
+<h1 class="page-title mb-3">Delete "{{ product.name }}"?</h1>
+<p class="page-sub mb-4">This action cannot be undone.</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-outline-danger">Yes, delete</button>
+    <a href="{% url 'dashboard:product_list' %}" class="btn btn-outline-ink">Cancel</a>
+</form>
+{% endblock %}
