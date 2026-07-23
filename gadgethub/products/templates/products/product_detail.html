@@ -1,45 +1,43 @@
 {% extends "base.html" %}
 {% block title %}{{ product.name }}{% endblock %}
 {% block content %}
-<div class="row">
+<div class="row g-5">
     <div class="col-md-5">
         {% if product.image %}
-        <img src="{{ product.image.url }}" class="img-fluid rounded">
+        <img src="{{ product.image.url }}" class="detail-img">
+        {% else %}
+        <div class="detail-img placeholder"></div>
         {% endif %}
     </div>
     <div class="col-md-7">
-        <h1>{{ product.name }}</h1>
-        <p class="text-muted">{{ product.brand }} · {{ product.get_category_display }}</p>
-        <h3 class="text-primary">${{ product.price }}</h3>
-        <p>{{ product.description|linebreaks }}</p>
+        <div class="spec-tag d-inline-block mb-3">SKU-{{ product.id|stringformat:"04d" }} · {% if product.in_stock %}IN STOCK{% else %}OUT OF STOCK{% endif %}</div>
+        <h1 class="page-title mb-1">{{ product.name }}</h1>
+        <p class="page-sub mb-3">{{ product.brand }} · {{ product.get_category_display }}</p>
+        <p class="detail-price">${{ product.price }}</p>
+        <p class="detail-desc">{{ product.description|linebreaks }}</p>
 
         {% if product.specs %}
-        <table class="table table-sm">
+        <table class="table spec-table">
             {% for key, value in product.specs.items %}
             <tr><th>{{ key }}</th><td>{{ value }}</td></tr>
             {% endfor %}
         </table>
         {% endif %}
-{% if product.in_stock %}
-<p><span class="badge bg-success">{{ product.stock }} in stock</span></p>
 
-{% if user.is_authenticated %}
-<form method="post" action="{% url 'cart:add' product.id %}" class="row g-2 align-items-center">
-    {% csrf_token %}
-    <div class="col-auto">
-        <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control" style="width:90px;">
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary">Add to Cart</button>
-    </div>
-</form>
-{% else %}
-<a href="{% url 'accounts:login' %}" class="btn btn-outline-primary">Login to purchase</a>
-{% endif %}
-
-{% else %}
-<span class="badge bg-danger">Out of stock</span>
-{% endif %}
+        {% if product.in_stock %}
+        <p class="stock-line">{{ product.stock }} units in stock</p>
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'cart:add' product.id %}" class="d-flex gap-2 align-items-center">
+            {% csrf_token %}
+            <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control qty-input">
+            <button type="submit" class="btn btn-accent">Add to Cart</button>
+        </form>
+        {% else %}
+        <a href="{% url 'accounts:login' %}" class="btn btn-outline-ink">Login to purchase</a>
+        {% endif %}
+        {% else %}
+        <p class="stock-line out">Currently unavailable</p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

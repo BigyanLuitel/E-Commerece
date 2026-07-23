@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Order #{{ order.id }}{% endblock %}
+{% block content %}
+<h1 class="page-title mb-1">Order #{{ order.id }}</h1>
+<p class="mb-3"><span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span></p>
+<p class="page-sub mb-4">Shipping to: {{ order.shipping_address }}</p>
+
+<table class="table gh-table">
+    <thead><tr><th>Product</th><th>Price</th><th>Qty</th><th>Subtotal</th></tr></thead>
+    <tbody>
+        {% for item in order.items.all %}
+        <tr>
+            <td>{{ item.product_name }}</td>
+            <td class="mono">${{ item.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td class="mono">${{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h4 class="mono mt-3">Total: ${{ order.total_price }}</h4>
+{% endblock %}

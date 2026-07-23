@@ -1,0 +1,346 @@
+:root {
+    --paper: #EDEFF2;
+    --panel: #FFFFFF;
+    --ink: #14171F;
+    --muted: #5B6472;
+    --accent: #F2A900;
+    --accent-dark: #C98800;
+    --teal: #0F9D8E;
+    --line: #D7DBE0;
+}
+
+body {
+    background-color: var(--paper);
+    color: var(--ink);
+     font-family: 'Work Sans', sans-serif;
+}
+.gh-navbar {
+    background-color: var(--panel);
+    border-bottom: 1px solid var(--line);
+    padding: 0.9rem 0;
+}
+
+.brand-logo {
+    height: 32px;
+    width: auto;
+}
+
+.navbar-brand span {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 1.35rem;
+    color: var(--ink);
+    letter-spacing: 0.3px;
+}
+
+.gh-navbar .nav-link {
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.gh-navbar .nav-link:hover {
+    color: var(--accent-dark);
+}
+
+.nav-cart {
+    position: relative;
+    padding-right: 1.1rem !important;
+}
+
+.cart-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--accent);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 0.05rem 0.4rem;
+}
+
+.nav-user {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.navbar-brand {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* ---- Hero ---- */
+.hero {
+    padding: 4rem 0 2rem;
+    text-align: left;
+}
+
+.hero-title {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+}
+
+.hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 1.75rem;
+}
+
+.hero-actions .btn {
+    margin-right: 0.75rem;
+}
+
+.btn-accent {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: var(--ink);
+    font-weight: 600;
+}
+.btn-accent:hover {
+    background-color: var(--accent-dark);
+    border-color: var(--accent-dark);
+    color: var(--ink);
+}
+
+.btn-outline-ink {
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+    font-weight: 500;
+}
+.btn-outline-ink:hover {
+    background-color: var(--ink);
+    color: var(--paper);
+}
+
+/* ---- Spec strip (signature datasheet bar) ---- */
+.spec-strip {
+     font-family: 'Archivo', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 0.85rem 0;
+}
+
+.spec-strip .dot {
+    margin: 0 0.75rem;
+    color: var(--line);
+}
+
+/* ---- Section titles ---- */
+.section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+/* ---- Category chips ---- */
+.chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background-color: var(--panel);
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.chip:hover {
+    border-color: var(--accent);
+    background-color: #FFF8E8;
+    color: var(--ink);
+}
+
+.chip-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+/* ---- Spec card (signature product card) ---- */
+.spec-card {
+    background-color: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.spec-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(20, 23, 31, 0.08);
+}
+
+.spec-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.5px;
+    color: var(--teal);
+    background-color: #E9F7F5;
+    border-bottom: 1px dashed var(--line);
+    padding: 0.35rem 0.75rem;
+}
+
+.spec-card-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.spec-card-img.placeholder {
+    background: repeating-linear-gradient(
+        45deg,
+        var(--paper),
+        var(--paper) 10px,
+        var(--panel) 10px,
+        var(--panel) 20px
+    );
+}
+
+.spec-card-body {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.spec-price {
+   font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+}
+
+/* ---- Shared page headers ---- */
+.page-title {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+}
+
+.page-sub {
+    color: var(--muted);
+}
+
+.mono {
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.table-link {
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: none;
+}
+.table-link:hover {
+    color: var(--accent-dark);
+}
+
+/* ---- Filter bar (product list) ---- */
+.filter-bar {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+.filter-input { max-width: 260px; }
+.filter-select { max-width: 220px; }
+
+/* ---- Product detail ---- */
+.detail-img {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+}
+.detail-img.placeholder {
+    height: 320px;
+    background: repeating-linear-gradient(45deg, var(--paper), var(--paper) 10px, var(--panel) 10px, var(--panel) 20px);
+}
+.detail-price {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: var(--ink);
+}
+.detail-desc { color: var(--muted); }
+.spec-table th { color: var(--muted); font-weight: 500; width: 40%; }
+.spec-table td { font-family: 'IBM Plex Mono', monospace; }
+.stock-line { color: var(--teal); font-weight: 600; margin-bottom: 0.75rem; }
+.stock-line.out { color: #C0392B; }
+.qty-input { max-width: 90px; }
+
+/* ---- Tables (cart/orders) ---- */
+.gh-table {
+    background-color: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.gh-table th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--line);
+}
+.gh-table td { border-color: var(--line); }
+
+.checkout-panel {
+    background-color: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    max-width: 420px;
+    margin-left: auto;
+}
+
+/* ---- Order status badges ---- */
+.status-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    font-weight: 600;
+}
+.status-pending { background-color: #FFF3D6; color: #97650A; }
+.status-paid { background-color: #E9F7F5; color: var(--teal); }
+.status-cancelled { background-color: #FBEAEA; color: #C0392B; }
+
+/* ---- Auth forms ---- */
+.auth-panel {
+    max-width: 420px;
+    margin: 2rem auto;
+    background-color: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 2rem;
+}
+.auth-panel .form-control {
+    border-color: var(--line);
+}

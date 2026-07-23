@@ -1,6 +1,28 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Product
 
+from django.db.models import Count
+
+def home(request):
+    featured = Product.objects.filter(is_active=True)[:8]
+    category_counts = (
+        Product.objects.filter(is_active=True)
+        .values('category')
+        .annotate(count=Count('id'))
+        .order_by('-count')
+    )
+    category_labels = dict(Product.CATEGORY_CHOICES)
+    categories = [
+        {'value': c['category'], 'label': category_labels.get(c['category'], c['category']), 'count': c['count']}
+        for c in category_counts if c['category']
+    ]
+    total_products = Product.objects.filter(is_active=True).count()
+
+    return render(request, 'products/home.html', {
+        'featured': featured,
+        'categories': categories,
+        'total_products': total_products,
+    })
 
 def product_list(request):
     products = Product.objects.filter(is_active=True)

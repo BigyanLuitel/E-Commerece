@@ -1,32 +1,26 @@
 {% extends "base.html" %}
 {% block title %}Your Cart{% endblock %}
 {% block content %}
-<h1>Your Cart</h1>
+<h1 class="page-title mb-4">Your Cart</h1>
 
 {% if items %}
-<table class="table align-middle">
+<table class="table gh-table align-middle">
     <thead>
-        <tr>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-            <th></th>
-        </tr>
+        <tr><th>Product</th><th>Price</th><th>Quantity</th><th>Subtotal</th><th></th></tr>
     </thead>
     <tbody>
         {% for item in items %}
         <tr>
-            <td><a href="{% url 'products:detail' item.product.slug %}">{{ item.product.name }}</a></td>
-            <td>${{ item.product.price }}</td>
-            <td style="max-width:140px;">
-                <form method="post" action="{% url 'cart:update' item.id %}" class="d-flex">
+            <td><a href="{% url 'products:detail' item.product.slug %}" class="table-link">{{ item.product.name }}</a></td>
+            <td class="mono">${{ item.product.price }}</td>
+            <td style="max-width:150px;">
+                <form method="post" action="{% url 'cart:update' item.id %}" class="d-flex gap-1">
                     {% csrf_token %}
                     <input type="number" name="quantity" value="{{ item.quantity }}" min="0" max="{{ item.product.stock }}" class="form-control form-control-sm">
-                    <button type="submit" class="btn btn-sm btn-outline-secondary ms-1">Update</button>
+                    <button type="submit" class="btn btn-sm btn-outline-ink">Update</button>
                 </form>
             </td>
-            <td>${{ item.subtotal }}</td>
+            <td class="mono">${{ item.subtotal }}</td>
             <td>
                 <form method="post" action="{% url 'cart:remove' item.id %}">
                     {% csrf_token %}
@@ -38,11 +32,15 @@
     </tbody>
 </table>
 
-<div class="d-flex justify-content-between align-items-center">
-    <h4>Total: ${{ cart.total_price }}</h4>
-    <a href="#" class="btn btn-success">Checkout</a>  {# wired up once orders app exists #}
+<div class="checkout-panel">
+    <h4 class="mono">Total: ${{ cart.total_price }}</h4>
+    <form method="post" action="{% url 'orders:checkout' %}">
+        {% csrf_token %}
+        <textarea name="shipping_address" class="form-control mb-3" placeholder="Shipping address" rows="2" required></textarea>
+        <button type="submit" class="btn btn-accent">Place Order</button>
+    </form>
 </div>
 {% else %}
-<p>Your cart is empty. <a href="{% url 'products:list' %}">Browse products</a>.</p>
+<p class="page-sub">Your cart is empty. <a href="{% url 'products:list' %}" class="table-link">Browse products</a>.</p>
 {% endif %}
 {% endblock %}

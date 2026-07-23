@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}GadgetHub — Tech, sourced right{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1 class="hero-title">Tech, sourced right.</h1>
+    <p class="hero-sub">Curated smartphones, laptops, audio, and gear — real stock, real specs, no filler.</p>
+    <div class="hero-actions">
+        <a href="{% url 'products:list' %}" class="btn btn-accent">Shop All</a>
+        <a href="#categories" class="btn btn-outline-ink">Browse by Category</a>
+    </div>
+</section>
+
+<div class="spec-strip">
+    <span>{{ total_products }} PRODUCTS</span>
+    <span class="dot">·</span>
+    <span>{{ categories|length }} CATEGORIES</span>
+    <span class="dot">·</span>
+    <span>FREE SHIPPING OVER $50</span>
+</div>
+
+<section id="categories" class="mt-5">
+    <h2 class="section-title">Shop by Category</h2>
+    <div class="chip-row">
+        {% for cat in categories %}
+        <a href="{% url 'products:list' %}?category={{ cat.value }}" class="chip">
+            {{ cat.label }} <span class="chip-count">{{ cat.count }}</span>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="mt-5">
+    <h2 class="section-title">Featured Products</h2>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for product in featured %}
+        <div class="col">
+            <div class="spec-card">
+                <div class="spec-tag">SKU-{{ product.id|stringformat:"04d" }} · {% if product.in_stock %}IN STOCK{% else %}OUT{% endif %}</div>
+                {% if product.image %}
+                <img src="{{ product.image.url }}" class="spec-card-img">
+                {% else %}
+                <div class="spec-card-img placeholder"></div>
+                {% endif %}
+                <div class="spec-card-body">
+                    <h5>{{ product.name }}</h5>
+                    <p class="text-muted mb-1">{{ product.brand }}</p>
+                    <p class="spec-price">${{ product.price }}</p>
+                    <a href="{% url 'products:detail' product.slug %}" class="btn btn-sm btn-outline-ink">View</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No products yet — add some through the admin panel.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
