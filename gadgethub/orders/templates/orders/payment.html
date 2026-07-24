@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Payment{% endblock %}
+{% block content %}
+<div class="payment-panel">
+    <div class="payment-gateway-header payment-{{ order.payment_method }}">
+        <span>{{ order.get_payment_method_display }}</span>
+        <span class="mono">SIMULATED GATEWAY</span>
+    </div>
+
+    <div class="payment-body">
+        <h4 class="mb-1">Order #{{ order.id }}</h4>
+        <p class="page-sub mb-4">You're paying via {{ order.get_payment_method_display }}</p>
+
+        <div class="payment-summary mb-4">
+            <div class="d-flex justify-content-between">
+                <span>Amount</span>
+                <span class="mono">${{ order.total_price }}</span>
+            </div>
+        </div>
+
+        <form method="post" action="{% url 'orders:payment_process' order.id %}" id="payForm">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-accent w-100" id="payBtn">Pay Now</button>
+        </form>
+        <p class="text-muted mt-3" style="font-size:0.8rem;">
+            This is a simulated payment for demo purposes — no real transaction occurs.
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -12,12 +12,24 @@ class Order(models.Model):
         (STATUS_PAID, 'Paid'),
         (STATUS_CANCELLED, 'Cancelled'),
     ]
+    PAYMENT_ESEWA = 'esewa'
+    PAYMENT_KHALTI = 'khalti'
+    PAYMENT_CARD = 'card'
+    PAYMENT_CHOICES = [
+        (PAYMENT_ESEWA, 'eSewa'),
+        (PAYMENT_KHALTI, 'Khalti'),
+        (PAYMENT_CARD, 'Credit/Debit Card'),
+    ]
+
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='orders'
     )
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_PENDING)
     shipping_address = models.TextField(blank=True)
+    payment_method = models.CharField(max_length=20, choices=PAYMENT_CHOICES, blank=True)
+    transaction_id = models.CharField(max_length=50, blank=True)
+    paid_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

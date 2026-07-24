@@ -37,7 +37,26 @@
     <form method="post" action="{% url 'orders:checkout' %}">
         {% csrf_token %}
         <textarea name="shipping_address" class="form-control mb-3" placeholder="Shipping address" rows="2" required></textarea>
-        <button type="submit" class="btn btn-accent">Place Order</button>
+
+        <label class="form-label">Payment Method</label>
+        <div class="payment-options mb-3">
+            <label class="payment-option">
+                <input type="radio" name="payment_method" value="esewa" checked>
+                <span>eSewa</span>
+            </label>
+            <label class="payment-option">
+                <input type="radio" name="payment_method" value="khalti">
+                <span>Khalti</span>
+            </label>
+            <label class="payment-option">
+                <input type="radio" name="payment_method" value="card">
+                <span>Credit/Debit Card</span>
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-accent">Continue to Payment</button>
+    </form>
+</div>
     </form>
 </div>
 {% else %}

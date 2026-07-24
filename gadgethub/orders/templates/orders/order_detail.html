@@ -3,6 +3,9 @@
 {% block content %}
 <h1 class="page-title mb-1">Order #{{ order.id }}</h1>
 <p class="mb-3"><span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span></p>
+{% if order.transaction_id %}
+<p class="page-sub mono mb-3">Txn ID: {{ order.transaction_id }} · {{ order.get_payment_method_display }} · {{ order.paid_at|date:"M d, Y H:i" }}</p>
+{% endif %}
 <p class="page-sub mb-4">Shipping to: {{ order.shipping_address }}</p>
 
 <table class="table gh-table">

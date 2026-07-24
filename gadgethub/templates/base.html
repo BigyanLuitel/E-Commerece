@@ -13,8 +13,8 @@
     <nav class="navbar navbar-expand-lg gh-navbar sticky-top">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}">
-            <img src="{% static 'img/logo.png' %}" alt="GadgetHub" class="brand-logo" onerror="this.style.display='none'">
-            <span>GadgetHub</span>
+            <img src="{% static 'images/logo.png' %}" alt="GadgetHub" class="brand-logo" onerror="this.style.display='none'">
+            
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
@@ -67,5 +67,45 @@
 
         {% block content %}{% endblock %}
     </div>
+    <footer class="gh-footer mt-5">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">GadgetHub</div>
+                    <p class="footer-tagline">Tech, sourced right.</p>
+                </div>
+
+                <div class="footer-col">
+                    <div class="footer-heading">Shop</div>
+                    <a href="{% url 'products:list' %}">All Products</a>
+                    <a href="{% url 'products:list' %}?category=smartphones">Smartphones</a>
+                    <a href="{% url 'products:list' %}?category=laptops">Laptops</a>
+                    <a href="{% url 'products:list' %}?category=audio">Audio</a>
+                </div>
+
+                <div class="footer-col">
+                    <div class="footer-heading">Account</div>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'cart:detail' %}">Cart</a>
+                    <a href="{% url 'orders:list' %}">My Orders</a>
+                    {% else %}
+                    <a href="{% url 'accounts:login' %}">Login</a>
+                    <a href="{% url 'accounts:signup' %}">Sign up</a>
+                    {% endif %}
+                </div>
+
+                <div class="footer-col">
+                    <div class="footer-heading">Info</div>
+                    <span class="footer-static">Kathmandu, Nepal</span>
+                    <span class="footer-static">Mon–Sat, 10am–6pm</span>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>© {% now "Y" %} GadgetHub. Built as a college project.</span>
+                <span class="mono">v1.0</span>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
