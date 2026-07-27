@@ -6,57 +6,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}GadgetHub{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/hero.css' %}">
     {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg gh-navbar sticky-top">
-    <div class="container">
-        <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}">
-            <img src="{% static 'images/logo.png' %}" alt="GadgetHub" class="brand-logo" onerror="this.style.display='none'">
-            
-        </a>
+    <div class="announce-bar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <span>Get 25% off your first order: <strong>GET25</strong></span>
+            <div class="announce-links">
+                <a href="{% url 'orders:list' %}">Track Order</a>
+                <span class="divider">|</span>
+                <a href="#">Help Center</a>
+            </div>
+        </div>
+    </div>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <header class="gh-header sticky-top">
+        <div class="container">
+            <div class="header-row">
+                <a href="{% url 'home' %}" class="brand">
+                    <img src="{% static 'images/logo.png' %}" alt="GadgetHub" class="brand-logo" onerror="this.style.display='none'">
+                    <span>GadgetHub</span>
+                </a>
 
-        <div class="collapse navbar-collapse" id="navMain">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="{% url 'products:list' %}">Products</a></li>
-                {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'orders:list' %}">My Orders</a></li>
-                {% endif %}
-            </ul>
-            <ul class="navbar-nav align-items-lg-center gap-lg-2">
-                {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link nav-cart" href="{% url 'cart:detail' %}">
-                        Cart
+                <form method="get" action="{% url 'products:list' %}" class="header-search">
+                    <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search products...">
+                    <button type="submit" aria-label="Search">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    </button>
+                </form>
+
+                <div class="header-icons">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'orders:list' %}" class="icon-link" title="My Orders">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </a>
+                    <a href="{% url 'cart:detail' %}" class="icon-link cart-icon" title="Cart">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
                         {% if request.user.cart.total_items %}
                         <span class="cart-badge">{{ request.user.cart.total_items }}</span>
                         {% endif %}
+                        <span class="cart-total d-none d-md-inline">${{ request.user.cart.total_price|default:"0.00" }}</span>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <span class="nav-link nav-user">{{ user.first_name|default:user.email }}</span>
-                </li>
-                <li class="nav-item">
-                    <form method="post" action="{% url 'accounts:logout' %}" class="d-inline">
+                    <form method="post" action="{% url 'accounts:logout' %}" class="d-none d-md-block">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-outline-ink">Logout</button>
+                        <button type="submit" class="icon-link logout-btn" title="Logout">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        </button>
                     </form>
-                </li>
-                {% else %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
-                <li class="nav-item">
-                    <a href="{% url 'accounts:signup' %}" class="btn btn-sm btn-accent">Sign up</a>
-                </li>
-                {% endif %}
-            </ul>
+                    {% else %}
+                    <a href="{% url 'accounts:login' %}" class="icon-link" title="Login">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </a>
+                    <a href="{% url 'accounts:signup' %}" class="btn btn-accent btn-sm d-none d-md-inline-block">Sign up</a>
+                    {% endif %}
+
+                    <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <form method="get" action="{% url 'products:list' %}" class="header-search-mobile">
+                <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search products...">
+                <button type="submit" aria-label="Search">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </button>
+            </form>
         </div>
-    </div>
-</nav>
+
+        <div class="category-nav" id="categoryNav">
+            <div class="container">
+                <div class="cat-links">
+                    <a href="{% url 'products:list' %}" class="cat-link active">Home</a>
+                    <a href="{% url 'products:list' %}?category=smartphones" class="cat-link">Smartphones</a>
+                    <a href="{% url 'products:list' %}?category=laptops" class="cat-link">Laptops</a>
+                    <a href="{% url 'products:list' %}?category=audio" class="cat-link">Audio</a>
+                    <a href="{% url 'products:list' %}?category=wearables" class="cat-link">Wearables</a>
+                    <a href="{% url 'products:list' %}?category=gaming" class="cat-link">Gaming</a>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'orders:list' %}" class="cat-link d-md-none">My Orders</a>
+                    <form method="post" action="{% url 'accounts:logout' %}" class="d-md-none">
+                        {% csrf_token %}
+                        <button type="submit" class="cat-link cat-link-btn">Logout</button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'accounts:signup' %}" class="cat-link d-md-none">Sign up</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
 
     <div class="container">
         {% if messages %}
@@ -67,6 +110,7 @@
 
         {% block content %}{% endblock %}
     </div>
+
     <footer class="gh-footer mt-5">
         <div class="container">
             <div class="footer-grid">
@@ -107,5 +151,8 @@
             </div>
         </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

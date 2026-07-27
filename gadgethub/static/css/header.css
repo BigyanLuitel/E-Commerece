@@ -1,0 +1,222 @@
+/* ============================================
+   Header: announcement bar, main header, category nav
+   ============================================ */
+
+.announce-bar {
+    background-color: var(--ink);
+    color: #E6E8EC;
+    font-size: 0.8rem;
+    padding: 0.5rem 0;
+}
+.announce-bar strong {
+    color: var(--accent);
+}
+.announce-links a {
+    color: #E6E8EC;
+    text-decoration: none;
+}
+.announce-links a:hover {
+    color: var(--accent);
+}
+.announce-links .divider {
+    margin: 0 0.6rem;
+    color: #4A4F5C;
+}
+
+.gh-header {
+    background-color: var(--panel);
+    border-bottom: 1px solid var(--line);
+    z-index: 1030;
+}
+
+.header-row {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem 0;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    text-decoration: none;
+}
+.brand-logo {
+    height: 32px;
+    width: auto;
+}
+.brand span {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 1.35rem;
+    color: var(--ink);
+}
+
+.header-search {
+    flex: 1;
+    max-width: 480px;
+    display: flex;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+}
+.header-search input {
+    flex: 1;
+    border: none;
+    padding: 0.6rem 1rem;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+}
+.header-search button {
+    background-color: var(--accent);
+    border: none;
+    padding: 0 1rem;
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.header-icons {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-left: auto;
+}
+
+.icon-link {
+    color: var(--ink);
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: none;
+}
+.icon-link:hover {
+    color: var(--accent-dark);
+}
+
+.cart-icon {
+    position: relative;
+}
+.cart-icon .cart-badge {
+    position: absolute;
+    top: -6px;
+    right: 40px;
+    background-color: var(--accent);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 0.05rem 0.4rem;
+}
+.cart-total {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--ink);
+}
+
+.logout-btn {
+    color: var(--ink);
+}
+
+.category-nav {
+    border-top: 1px solid var(--line);
+    padding: 0.7rem 0;
+}
+.cat-link {
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+.cat-link:hover, .cat-link.active {
+    color: var(--ink);
+}
+
+@media (max-width: 768px) {
+    .header-search { display: none; }
+    .header-row { gap: 1rem; }
+}
+/* ---- Responsive header ---- */
+.mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--ink);
+    cursor: pointer;
+    padding: 0;
+}
+
+.header-search-mobile {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .header-search {
+        display: none;
+    }
+    .header-search-mobile {
+        display: flex;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        overflow: hidden;
+        margin-bottom: 0.75rem;
+    }
+    .header-search-mobile input {
+        flex: 1;
+        border: none;
+        padding: 0.55rem 0.9rem;
+        font-size: 0.85rem;
+        outline: none;
+    }
+    .header-search-mobile button {
+        background-color: var(--accent);
+        border: none;
+        padding: 0 0.9rem;
+        color: var(--ink);
+    }
+
+    .mobile-toggle {
+        display: block;
+    }
+
+    .header-row {
+        gap: 0.75rem;
+        padding: 0.85rem 0 0;
+    }
+
+    .header-icons {
+        gap: 0.9rem;
+    }
+
+    .category-nav {
+        display: none;
+    }
+    .category-nav.open {
+        display: block;
+    }
+    .cat-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem !important;
+        padding: 0.5rem 0 1rem;
+    }
+    .cat-link-btn {
+        background: none;
+        border: none;
+        text-align: left;
+        padding: 0;
+    }
+}
+.cat-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}

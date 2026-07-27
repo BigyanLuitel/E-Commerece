@@ -1,25 +1,70 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}GadgetHub — Tech, sourced right{% endblock %}
+{% block title %}GadgetHub — What you see is what you get{% endblock %}
 
 {% block content %}
 <section class="hero">
-    <h1 class="hero-title">Tech, sourced right.</h1>
-    <p class="hero-sub">Curated smartphones, laptops, audio, and gear — real stock, real specs, no filler.</p>
-    <div class="hero-actions">
-        <a href="{% url 'products:list' %}" class="btn btn-accent">Shop All</a>
-        <a href="#categories" class="btn btn-outline-ink">Browse by Category</a>
-    </div>
-</section>
+    <div class="container">
+        <div class="hero-grid">
+            <div class="hero-content">
+                <h1 class="hero-title">What you see is what you get..</h1>
+                <p class="hero-sub">Curated smartphones, laptops, audio, and gear — Your next upgrade starts here</p>
+                <div class="hero-actions">
+                    <a href="{% url 'products:list' %}" class="btn btn-accent">Shop All</a>
+                    <a href="#categories" class="btn btn-outline-ink">Browse by Category</a>
+                </div>
 
-<div class="spec-strip">
-    <span>{{ total_products }} PRODUCTS</span>
-    <span class="dot">·</span>
-    <span>{{ categories|length }} CATEGORIES</span>
-    <span class="dot">·</span>
-    <span>FREE SHIPPING OVER $50</span>
+                <div class="trust-row">
+                    <div class="trust-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                        <span>Free shipping over $50</span>
+                    </div>
+                    <div class="trust-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <span>Secure checkout</span>
+                    </div>
+                    <div class="trust-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 0 0 1 1h3m10-11l2 2m-2-2v10a1 1 0 0 1-1 1h-3m-6 0a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1m-6 0h6"/></svg>
+                        <span>Genuine, in-stock products</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-media">
+    <div class="hero-shape"></div>
+    <img src="{% static 'images/hero/hero-main.jpg' %}" alt="GadgetHub" class="hero-img">
 </div>
+        </div>
+    </div>
 
+   <div class="spec-strip">
+    <div class="container">
+        <div class="spec-box-row">
+            <div class="spec-box">
+                <div class="spec-icon spec-icon-amber">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                </div>
+                <span class="spec-box-value mono">{{ total_products }}<span class="accent-plus">+</span></span>
+                <span class="spec-box-label">Products</span>
+            </div>
+            <div class="spec-box">
+                <div class="spec-icon spec-icon-teal">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </div>
+                <span class="spec-box-value mono">{{ categories|length }}<span class="accent-plus">+</span></span>
+                <span class="spec-box-label">Categories</span>
+            </div>
+            <div class="spec-box">
+                <div class="spec-icon spec-icon-ink">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                </div>
+                <span class="spec-box-value mono">$50<span class="accent-plus">+</span></span>
+                <span class="spec-box-label">Free Shipping</span>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
 <section id="categories" class="mt-5">
     <h2 class="section-title">Shop by Category</h2>
     <div class="chip-row">

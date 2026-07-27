@@ -8,15 +8,18 @@
     </div>
 </div>
 
+{% if query %}
+<p class="page-sub mb-3">Showing results for "<strong>{{ query }}</strong>"</p>
+{% endif %}
+
 <form method="get" class="filter-bar mb-4">
-    <input type="text" name="q" value="{{ query }}" class="form-control filter-input" placeholder="Search products...">
-    <select name="category" class="form-select filter-select">
+    <input type="hidden" name="q" value="{{ query }}">
+    <select name="category" class="form-select filter-select" onchange="this.form.submit()">
         <option value="">All categories</option>
         {% for value, label in categories %}
         <option value="{{ value }}" {% if request.GET.category == value %}selected{% endif %}>{{ label }}</option>
         {% endfor %}
     </select>
-    <button class="btn btn-accent" type="submit">Filter</button>
 </form>
 
 <div class="row row-cols-1 row-cols-md-4 g-4">

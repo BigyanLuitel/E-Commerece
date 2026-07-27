@@ -4,60 +4,65 @@
 <h1 class="page-title mb-4">Your Cart</h1>
 
 {% if items %}
-<table class="table gh-table align-middle">
-    <thead>
-        <tr><th>Product</th><th>Price</th><th>Quantity</th><th>Subtotal</th><th></th></tr>
-    </thead>
-    <tbody>
-        {% for item in items %}
-        <tr>
-            <td><a href="{% url 'products:detail' item.product.slug %}" class="table-link">{{ item.product.name }}</a></td>
-            <td class="mono">${{ item.product.price }}</td>
-            <td style="max-width:150px;">
-                <form method="post" action="{% url 'cart:update' item.id %}" class="d-flex gap-1">
-                    {% csrf_token %}
-                    <input type="number" name="quantity" value="{{ item.quantity }}" min="0" max="{{ item.product.stock }}" class="form-control form-control-sm">
-                    <button type="submit" class="btn btn-sm btn-outline-ink">Update</button>
-                </form>
-            </td>
-            <td class="mono">${{ item.subtotal }}</td>
-            <td>
-                <form method="post" action="{% url 'cart:remove' item.id %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="cart-layout">
+    <div class="cart-items-col">
+        <table class="table gh-table align-middle">
+            <thead>
+                <tr><th>Product</th><th>Price</th><th>Quantity</th><th>Subtotal</th><th></th></tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td><a href="{% url 'products:detail' item.product.slug %}" class="table-link">{{ item.product.name }}</a></td>
+                    <td class="mono">${{ item.product.price }}</td>
+                    <td style="max-width:150px;">
+                        <form method="post" action="{% url 'cart:update' item.id %}" class="d-flex gap-1">
+                            {% csrf_token %}
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="0" max="{{ item.product.stock }}" class="form-control form-control-sm">
+                            <button type="submit" class="btn btn-sm btn-outline-ink">Update</button>
+                        </form>
+                    </td>
+                    <td class="mono">${{ item.subtotal }}</td>
+                    <td>
+                        <form method="post" action="{% url 'cart:remove' item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-<div class="checkout-panel">
-    <h4 class="mono">Total: ${{ cart.total_price }}</h4>
-    <form method="post" action="{% url 'orders:checkout' %}">
-        {% csrf_token %}
-        <textarea name="shipping_address" class="form-control mb-3" placeholder="Shipping address" rows="2" required></textarea>
+    <div class="cart-summary-col">
+        <div class="checkout-panel">
+            <h4 class="mono mb-3">Total: ${{ cart.total_price }}</h4>
+            <form method="post" action="{% url 'orders:checkout' %}">
+                {% csrf_token %}
+                <label class="form-label">Shipping Address</label>
+                <textarea name="shipping_address" class="form-control mb-3" placeholder="Enter your address" rows="2" required></textarea>
 
-        <label class="form-label">Payment Method</label>
-        <div class="payment-options mb-3">
-            <label class="payment-option">
-                <input type="radio" name="payment_method" value="esewa" checked>
-                <span>eSewa</span>
-            </label>
-            <label class="payment-option">
-                <input type="radio" name="payment_method" value="khalti">
-                <span>Khalti</span>
-            </label>
-            <label class="payment-option">
-                <input type="radio" name="payment_method" value="card">
-                <span>Credit/Debit Card</span>
-            </label>
+                <label class="form-label">Payment Method</label>
+                <div class="payment-options mb-3">
+                    <label class="payment-option">
+                        <input type="radio" name="payment_method" value="esewa" checked>
+                        <span>eSewa</span>
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment_method" value="khalti">
+                        <span>Khalti</span>
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment_method" value="card">
+                        <span>Credit/Debit Card</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-accent w-100">Continue to Payment</button>
+            </form>
         </div>
-
-        <button type="submit" class="btn btn-accent">Continue to Payment</button>
-    </form>
-</div>
-    </form>
+    </div>
 </div>
 {% else %}
 <p class="page-sub">Your cart is empty. <a href="{% url 'products:list' %}" class="table-link">Browse products</a>.</p>
