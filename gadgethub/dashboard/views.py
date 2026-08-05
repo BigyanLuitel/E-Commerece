@@ -8,6 +8,10 @@ from products.forms import ProductForm
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 from orders.models import Order
+import requests
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+import json
 
 @staff_member_required
 def product_list(request):
@@ -102,3 +106,31 @@ def order_detail(request, pk):
             return redirect('dashboard:order_detail', pk=order.pk)
 
     return render(request, 'dashboard/order_detail.html', {'order': order})
+
+
+@staff_member_required
+@require_POST
+def generate_description(request):
+    try:
+        payload = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+    
+    ai_payload = {
+        "name": payload.get("name", ""),
+        "category": payload.get("category", ""),
+        "brand": payload.get("brand", ""),
+        "raw_notes": payload.get("raw_notes", ""),
+        "specs": payload.get("specs") or None,
+    }
+    try:
+        response = requests.post(
+            "http://localhost:8010/products/generate-description",
+            json=ai_payload,
+            timeout=15,
+        )
+        response.raise_for_status()
+    except requests.RequestException as e:
+        return JsonResponse({"error": f"AI service unavailable: {str(e)}"}, status=502)
+
+    return JsonResponse(response.json())

@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    {% block extra_head %}{% endblock %}
 </head>
 <body class="dash-body">
     <div class="dash-shell">
