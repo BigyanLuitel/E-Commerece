@@ -16,13 +16,28 @@
         <aside class="dash-sidebar">
             <div class="dash-brand">GadgetHub <span>Admin</span></div>
             <nav class="dash-nav">
-                <a href="{% url 'dashboard:home' %}" class="dash-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Overview</a>
-<a href="{% url 'dashboard:product_list' %}" class="dash-link {% if 'product' in request.resolver_match.url_name %}active{% endif %}">Products</a>               
- <a href="{% url 'dashboard:order_list' %}" class="dash-link {% if 'order' in request.resolver_match.url_name %}active{% endif %}">Orders</a>
-                <a href="#" class="dash-link dash-link-ai">AI Tools</a>
+                <a href="{% url 'dashboard:home' %}" class="dash-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    Overview
+                </a>
+                <a href="{% url 'dashboard:product_list' %}" class="dash-link {% if 'product' in request.resolver_match.url_name %}active{% endif %}">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                    Products
+                </a>
+                <a href="{% url 'dashboard:order_list' %}" class="dash-link {% if 'order' in request.resolver_match.url_name %}active{% endif %}">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    Orders
+                </a>
+                <a href="#" class="dash-link dash-link-ai">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l1.9 5.8L20 9.5l-5 3.9 1.5 6.1L12 16l-4.5 3.5L9 13.4l-5-3.9 6.1-1.7z"/></svg>
+                    AI Tools
+                </a>
             </nav>
             <div class="dash-sidebar-footer">
-                <span class="dash-user">{{ user.email }}</span>
+                <div class="dash-user-row">
+                    <div class="dash-avatar">{{ user.email|first|upper }}</div>
+                    <span class="dash-user">{{ user.email }}</span>
+                </div>
                 <form method="post" action="{% url 'accounts:logout' %}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-sm btn-outline-ink w-100 mt-2">Logout</button>

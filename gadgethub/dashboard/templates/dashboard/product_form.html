@@ -2,23 +2,107 @@
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
 <h1 class="page-title mb-4">{{ title }}</h1>
-<form method="post" enctype="multipart/form-data" class="dash-form" id="productForm">
-    {% csrf_token %}
-    {% for field in form %}
-    <div class="mb-3">
-        <label class="form-label">{{ field.label }}</label>
-        {{ field }}
-        {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
-        {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
 
-        {% if field.name == 'description' %}
-        <button type="button" id="generateBtn" class="btn btn-sm btn-outline-ink mt-2">✨ Generate with AI</button>
-        <span id="generateStatus" class="text-muted small ms-2"></span>
-        {% endif %}
+<form method="post" enctype="multipart/form-data" class="dash-form dash-form-wide" id="productForm">
+    {% csrf_token %}
+
+    <div class="form-card-header">
+        <span class="form-card-eyebrow">Product Details</span>
+        <span class="form-card-hint">Fields marked with ✨ can be auto-filled by AI</span>
     </div>
-    {% endfor %}
-    <button type="submit" class="btn btn-accent">Save</button>
-    <a href="{% url 'dashboard:product_list' %}" class="btn btn-outline-ink">Cancel</a>
+
+    <div class="form-section">
+        <div class="form-section-title">Identity</div>
+        <div class="form-row form-row-3">
+            <div class="form-field">
+                <label class="form-label">{{ form.name.label }}</label>
+                {{ form.name }}
+                {% if form.name.errors %}<div class="text-danger small">{{ form.name.errors }}</div>{% endif %}
+            </div>
+            <div class="form-field">
+                <label class="form-label">{{ form.slug.label }}</label>
+                {{ form.slug }}
+                {% if form.slug.errors %}<div class="text-danger small">{{ form.slug.errors }}</div>{% endif %}
+            </div>
+            <div class="form-field">
+                <label class="form-label">{{ form.brand.label }}</label>
+                {{ form.brand }}
+                {% if form.brand.errors %}<div class="text-danger small">{{ form.brand.errors }}</div>{% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <div class="form-section-title">Classification &amp; Pricing</div>
+        <div class="form-row form-row-3">
+            <div class="form-field">
+                <label class="form-label">{{ form.category.label }}</label>
+                {{ form.category }}
+                {% if form.category.errors %}<div class="text-danger small">{{ form.category.errors }}</div>{% endif %}
+                <button type="button" id="suggestCategoryBtn" class="btn-ai mt-2">✨ Suggest Category</button>
+                <span id="categoryStatus" class="ai-status"></span>
+            </div>
+            <div class="form-field">
+                <label class="form-label">{{ form.price.label }}</label>
+                {{ form.price }}
+                {% if form.price.errors %}<div class="text-danger small">{{ form.price.errors }}</div>{% endif %}
+            </div>
+            <div class="form-field">
+                <label class="form-label">{{ form.stock.label }}</label>
+                {{ form.stock }}
+                {% if form.stock.errors %}<div class="text-danger small">{{ form.stock.errors }}</div>{% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <div class="form-section-title">Listing Copy</div>
+        <div class="form-field">
+            <label class="form-label">{{ form.description.label }}</label>
+            {{ form.description }}
+            {% if form.description.errors %}<div class="text-danger small">{{ form.description.errors }}</div>{% endif %}
+            <button type="button" id="generateBtn" class="btn-ai mt-2">✨ Generate with AI</button>
+            <span id="generateStatus" class="ai-status"></span>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <div class="form-section-title">Seller Input</div>
+        <div class="form-row form-row-2">
+            <div class="form-field">
+                <label class="form-label">{{ form.raw_notes.label }}</label>
+                {{ form.raw_notes }}
+                {% if form.raw_notes.errors %}<div class="text-danger small">{{ form.raw_notes.errors }}</div>{% endif %}
+                <div class="form-text">Rough seller notes — feeds the AI tools above.</div>
+            </div>
+            <div class="form-field">
+                <label class="form-label">{{ form.specs.label }}</label>
+                {{ form.specs }}
+                {% if form.specs.errors %}<div class="text-danger small">{{ form.specs.errors }}</div>{% endif %}
+                <div class="form-text">JSON format, e.g. {"RAM": "16GB"}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <div class="form-section-title">Media &amp; Status</div>
+        <div class="form-row form-row-2 align-items-center">
+            <div class="form-field">
+                <label class="form-label">{{ form.image.label }}</label>
+                {{ form.image }}
+                {% if form.image.errors %}<div class="text-danger small">{{ form.image.errors }}</div>{% endif %}
+            </div>
+            <div class="form-field form-check-field">
+                {{ form.is_active }}
+                <label class="form-check-label">{{ form.is_active.label }}</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-accent">Save Product</button>
+        <a href="{% url 'dashboard:product_list' %}" class="btn btn-outline-ink">Cancel</a>
+    </div>
 </form>
 {% endblock %}
 
@@ -27,57 +111,102 @@
 document.addEventListener('DOMContentLoaded', function () {
     const btn = document.getElementById('generateBtn');
     const status = document.getElementById('generateStatus');
-    if (!btn) return;
+    if (btn) {
+        btn.addEventListener('click', async function () {
+            const name = document.getElementById('id_name').value;
+            const category = document.getElementById('id_category').value;
+            const brand = document.getElementById('id_brand').value;
+            const rawNotes = document.getElementById('id_raw_notes').value;
+            const specsText = document.getElementById('id_specs').value;
 
-    btn.addEventListener('click', async function () {
-        const name = document.getElementById('id_name').value;
-        const category = document.getElementById('id_category').value;
-        const brand = document.getElementById('id_brand').value;
-        const rawNotes = document.getElementById('id_raw_notes').value;
-        const specsText = document.getElementById('id_specs').value;
-
-        if (!name) {
-            status.textContent = 'Enter a product name first.';
-            return;
-        }
-
-        let specs = null;
-        if (specsText.trim()) {
-            try {
-                specs = JSON.parse(specsText);
-            } catch (e) {
-                status.textContent = 'Specs field has invalid JSON — fix or clear it first.';
+            if (!name) {
+                status.textContent = 'Enter a product name first.';
                 return;
             }
-        }
 
-        btn.disabled = true;
-        status.textContent = 'Generating...';
-
-        try {
-            const response = await fetch("{% url 'dashboard:generate_description' %}", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-                },
-                body: JSON.stringify({ name, category, brand, raw_notes: rawNotes, specs }),
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                status.textContent = data.error || 'Generation failed.';
-            } else {
-                document.getElementById('id_description').value = data.description;
-                status.textContent = 'Done — review before saving.';
+            let specs = null;
+            if (specsText.trim()) {
+                try {
+                    specs = JSON.parse(specsText);
+                } catch (e) {
+                    status.textContent = 'Specs field has invalid JSON — fix or clear it first.';
+                    return;
+                }
             }
-        } catch (err) {
-            status.textContent = 'Request failed. Is the AI service running?';
-        } finally {
-            btn.disabled = false;
-        }
-    });
+
+            btn.disabled = true;
+            btn.classList.add('btn-ai-loading');
+            status.textContent = 'Generating...';
+
+            try {
+                const response = await fetch("{% url 'dashboard:generate_description' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                    },
+                    body: JSON.stringify({ name, category, brand, raw_notes: rawNotes, specs }),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    status.textContent = data.error || 'Generation failed.';
+                } else {
+                    document.getElementById('id_description').value = data.description;
+                    status.textContent = 'Done — review before saving.';
+                }
+            } catch (err) {
+                status.textContent = 'Request failed. Is the AI service running?';
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove('btn-ai-loading');
+            }
+        });
+    }
+
+    const catBtn = document.getElementById('suggestCategoryBtn');
+    const catStatus = document.getElementById('categoryStatus');
+    if (catBtn) {
+        catBtn.addEventListener('click', async function () {
+            const name = document.getElementById('id_name').value;
+            const rawNotes = document.getElementById('id_raw_notes').value;
+
+            if (!name) {
+                catStatus.textContent = 'Enter a product name first.';
+                return;
+            }
+
+            catBtn.disabled = true;
+            catBtn.classList.add('btn-ai-loading');
+            catStatus.textContent = 'Thinking...';
+
+            try {
+                const response = await fetch("{% url 'dashboard:suggest_category' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                    },
+                    body: JSON.stringify({ name, raw_notes: rawNotes }),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.category) {
+                    catStatus.textContent = data.confidence_note || data.error || 'Could not determine category.';
+                } else {
+                    document.getElementById('id_category').value = data.category;
+                    catStatus.textContent = data.confidence_note;
+                }
+            } catch (err) {
+                catStatus.textContent = 'Request failed. Is the AI service running?';
+            } finally {
+                catBtn.disabled = false;
+                catBtn.classList.remove('btn-ai-loading');
+            }
+        });
+    }
 });
 </script>
 {% endblock %}

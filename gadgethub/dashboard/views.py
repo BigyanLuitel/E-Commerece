@@ -134,3 +134,28 @@ def generate_description(request):
         return JsonResponse({"error": f"AI service unavailable: {str(e)}"}, status=502)
 
     return JsonResponse(response.json())
+
+@staff_member_required
+@require_POST
+def suggest_category(request):
+    try:
+        payload = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid request data."}, status=400)
+
+    ai_payload = {
+        "name": payload.get("name", ""),
+        "raw_notes": payload.get("raw_notes", ""),
+    }
+
+    try:
+        response = requests.post(
+            "http://localhost:8010/products/suggest-category",
+            json=ai_payload,
+            timeout=15,
+        )
+        response.raise_for_status()
+    except requests.RequestException as e:
+        return JsonResponse({"error": f"AI service unavailable: {str(e)}"}, status=502)
+
+    return JsonResponse(response.json())
