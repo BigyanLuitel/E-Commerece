@@ -129,6 +129,7 @@ def checkout(request):
         'success': True,
         'order_id': order.id,
         'total': str(order.total_price),
+        'payment_method': payment_method,
     })
 
 

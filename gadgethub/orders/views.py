@@ -1,3 +1,6 @@
+import random
+import string
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
@@ -46,11 +49,11 @@ def checkout(request):
             item.product.stock -= item.quantity
             item.product.save()
         cart.items.all().delete()
+    if payment_method == Order.PAYMENT_COD:
+        messages.success(request, f"Order #{order.id} placed. Pay in cash when it arrives.")
+        return redirect('orders:detail', order_id=order.id)
 
     return redirect('orders:payment', order_id=order.id)
-
-import random
-import string
 
 
 def _generate_transaction_id():

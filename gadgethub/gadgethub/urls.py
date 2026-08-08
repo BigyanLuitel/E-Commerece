@@ -27,6 +27,7 @@ urlpatterns = [
     path('orders/', include('orders.urls')),
         path('dashboard/', include('dashboard.urls')),
 path('api/internal/', include('internal_api.urls')),
+path('chat/', include('chatbot.urls')),
     path('', product_views.home, name='home'),
     path('products/', include('products.urls')),
 ]

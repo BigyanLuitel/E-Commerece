@@ -48,11 +48,14 @@ INSTALLED_APPS = [
     'orders',
     'dashboard',
     'internal_api',
+    'chatbot',
     
 ]
 AUTH_USER_MODEL = 'accounts.User'
 load_dotenv()
 INTERNAL_API_KEY = os.getenv('INTERNAL_API_KEY')
+
+AI_SERVICE_URL = os.getenv('AI_SERVICE_URL', 'http://localhost:8010')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

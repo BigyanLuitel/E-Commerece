@@ -15,10 +15,12 @@ class Order(models.Model):
     PAYMENT_ESEWA = 'esewa'
     PAYMENT_KHALTI = 'khalti'
     PAYMENT_CARD = 'card'
+    PAYMENT_COD = 'cod'
     PAYMENT_CHOICES = [
         (PAYMENT_ESEWA, 'eSewa'),
         (PAYMENT_KHALTI, 'Khalti'),
         (PAYMENT_CARD, 'Credit/Debit Card'),
+        (PAYMENT_COD, 'Cash on Delivery'),
     ]
 
 
