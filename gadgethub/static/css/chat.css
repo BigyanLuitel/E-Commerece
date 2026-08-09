@@ -165,3 +165,20 @@
     cursor: pointer;
     line-height: 1;
 }
+.chat-msg-assistant strong {
+    color: var(--ink);
+    font-weight: 700;
+}
+.chat-msg-assistant ol, .chat-msg-assistant ul {
+    margin: 0.4rem 0;
+    padding-left: 1.2rem;
+}
+.chat-msg-assistant li {
+    margin-bottom: 0.3rem;
+}
+.chat-msg-assistant p {
+    margin: 0 0 0.4rem 0;
+}
+.chat-msg-assistant p:last-child {
+    margin-bottom: 0;
+}

@@ -40,10 +40,16 @@ document.addEventListener('DOMContentLoaded', function () {
         return match ? match[2] : null;
     }
 
-    function addMessage(text, role) {
+   function addMessage(text, role) {
         const div = document.createElement('div');
         div.className = `chat-msg chat-msg-${role}`;
-        div.textContent = text;
+
+        if (role === 'assistant') {
+            div.innerHTML = marked.parse(text);
+        } else {
+            div.textContent = text;
+        }
+
         messagesEl.appendChild(div);
         messagesEl.scrollTop = messagesEl.scrollHeight;
         return div;
