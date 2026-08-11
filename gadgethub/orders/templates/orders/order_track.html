@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Track Order #{{ order.id }}{% endblock %}
+{% block content %}
+<h1 class="page-title mb-1">Track Order #{{ order.id }}</h1>
+<p class="page-sub mb-4">Placed {{ order.created_at|date:"M d, Y H:i" }}</p>
+
+{% if order.status == 'cancelled' %}
+<div class="track-cancelled">
+    <span class="status-badge status-cancelled">Cancelled</span>
+    <p class="mt-2 mb-0">This order was cancelled and is not being processed.</p>
+</div>
+{% else %}
+<div class="track-timeline">
+    {% for step_key, step_label in order.STATUS_CHOICES %}
+        {% if step_key in status_flow %}
+        <div class="track-step {% if forloop.counter0 <= current_step %}done{% endif %} {% if forloop.counter0 == current_step %}active{% endif %}">
+            <div class="track-dot"></div>
+            <div class="track-label">{{ step_label }}</div>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="track-detail mt-5">
+    <h5 class="mb-3">Order Summary</h5>
+    <table class="table gh-table">
+        <thead><tr><th>Product</th><th>Price</th><th>Qty</th><th>Subtotal</th></tr></thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.product_name }}</td>
+                <td class="mono">${{ item.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td class="mono">${{ item.subtotal }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p class="mono mb-1">Total: ${{ order.total_price }}</p>
+    <p class="page-sub mb-0">Shipping to: {{ order.shipping_address }}</p>
+    {% if order.transaction_id %}
+    <p class="page-sub mono">Txn: {{ order.transaction_id }} · {{ order.get_payment_method_display }}</p>
+    {% endif %}
+</div>
+{% endblock %}

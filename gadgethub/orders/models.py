@@ -2,16 +2,23 @@ from django.conf import settings
 from django.db import models
 from products.models import Product
 
-
 class Order(models.Model):
     STATUS_PENDING = 'pending'
     STATUS_PAID = 'paid'
+    STATUS_SHIPPED = 'shipped'
+    STATUS_DELIVERED = 'delivered'
     STATUS_CANCELLED = 'cancelled'
     STATUS_CHOICES = [
         (STATUS_PENDING, 'Pending'),
         (STATUS_PAID, 'Paid'),
+        (STATUS_SHIPPED, 'Shipped'),
+        (STATUS_DELIVERED, 'Delivered'),
         (STATUS_CANCELLED, 'Cancelled'),
     ]
+
+    # Defines the normal forward progression for the tracking timeline.
+    # Cancelled is excluded — it's an alternate end-state, not a step in this sequence.
+    STATUS_FLOW = [STATUS_PENDING, STATUS_PAID, STATUS_SHIPPED, STATUS_DELIVERED]  
     PAYMENT_ESEWA = 'esewa'
     PAYMENT_KHALTI = 'khalti'
     PAYMENT_CARD = 'card'
@@ -44,6 +51,15 @@ class Order(models.Model):
     @property
     def total_price(self):
         return sum(item.subtotal for item in self.items.all())
+    
+    def get_status_step_index(self):
+        """Returns this order's position in the normal status flow, or -1 if cancelled."""
+        if self.status == self.STATUS_CANCELLED:
+            return -1
+        try:
+            return self.STATUS_FLOW.index(self.status)
+        except ValueError:
+            return 0
 
 
 class OrderItem(models.Model):

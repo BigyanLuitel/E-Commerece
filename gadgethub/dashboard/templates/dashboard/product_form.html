@@ -11,90 +11,102 @@
         <span class="form-card-hint">Fields marked with ✨ can be auto-filled by AI</span>
     </div>
 
-    <div class="form-section">
-        <div class="form-section-title">Identity</div>
-        <div class="form-row form-row-3">
-            <div class="form-field">
-                <label class="form-label">{{ form.name.label }}</label>
-                {{ form.name }}
-                {% if form.name.errors %}<div class="text-danger small">{{ form.name.errors }}</div>{% endif %}
+    <div class="form-two-col">
+        <div class="form-col">
+            <div class="form-section">
+                <div class="form-section-title">Identity</div>
+                <div class="form-row form-row-2">
+                    <div class="form-field">
+                        <label class="form-label">{{ form.name.label }}</label>
+                        {{ form.name }}
+                        {% if form.name.errors %}<div class="text-danger small">{{ form.name.errors }}</div>{% endif %}
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">{{ form.slug.label }}</label>
+                        {{ form.slug }}
+                        {% if form.slug.errors %}<div class="text-danger small">{{ form.slug.errors }}</div>{% endif %}
+                    </div>
+                </div>
+                <div class="form-row form-row-1">
+                    <div class="form-field">
+                        <label class="form-label">{{ form.brand.label }}</label>
+                        {{ form.brand }}
+                        {% if form.brand.errors %}<div class="text-danger small">{{ form.brand.errors }}</div>{% endif %}
+                    </div>
+                </div>
             </div>
-            <div class="form-field">
-                <label class="form-label">{{ form.slug.label }}</label>
-                {{ form.slug }}
-                {% if form.slug.errors %}<div class="text-danger small">{{ form.slug.errors }}</div>{% endif %}
+
+            <div class="form-section">
+                <div class="form-section-title">Classification &amp; Pricing</div>
+                <div class="form-row form-row-1">
+                    <div class="form-field">
+                        <div class="field-label-row">
+                            <label class="form-label">{{ form.category.label }}</label>
+                            <button type="button" id="suggestCategoryBtn" class="btn-ai-inline">✨ Suggest</button>
+                        </div>
+                        {{ form.category }}
+                        {% if form.category.errors %}<div class="text-danger small">{{ form.category.errors }}</div>{% endif %}
+                        <span id="categoryStatus" class="ai-status"></span>
+                    </div>
+                </div>
+                <div class="form-row form-row-2">
+                    <div class="form-field">
+                        <label class="form-label">{{ form.price.label }}</label>
+                        {{ form.price }}
+                        {% if form.price.errors %}<div class="text-danger small">{{ form.price.errors }}</div>{% endif %}
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">{{ form.stock.label }}</label>
+                        {{ form.stock }}
+                        {% if form.stock.errors %}<div class="text-danger small">{{ form.stock.errors }}</div>{% endif %}
+                    </div>
+                </div>
             </div>
-            <div class="form-field">
-                <label class="form-label">{{ form.brand.label }}</label>
-                {{ form.brand }}
-                {% if form.brand.errors %}<div class="text-danger small">{{ form.brand.errors }}</div>{% endif %}
+
+            <div class="form-section">
+                <div class="form-section-title">Media &amp; Status</div>
+                <div class="form-row form-row-2 align-items-center">
+                    <div class="form-field">
+                        <label class="form-label">{{ form.image.label }}</label>
+                        {{ form.image }}
+                        {% if form.image.errors %}<div class="text-danger small">{{ form.image.errors }}</div>{% endif %}
+                    </div>
+                    <div class="form-field form-check-field">
+                        {{ form.is_active }}
+                        <label class="form-check-label">{{ form.is_active.label }}</label>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="form-section">
-        <div class="form-section-title">Classification &amp; Pricing</div>
-        <div class="form-row form-row-3">
-            <div class="form-field">
-                <label class="form-label">{{ form.category.label }}</label>
-                {{ form.category }}
-                {% if form.category.errors %}<div class="text-danger small">{{ form.category.errors }}</div>{% endif %}
-                <button type="button" id="suggestCategoryBtn" class="btn-ai mt-2">✨ Suggest Category</button>
-                <span id="categoryStatus" class="ai-status"></span>
+        <div class="form-col">
+            <div class="form-section">
+                <div class="form-section-title">Listing Copy</div>
+                <div class="form-field">
+                    <div class="field-label-row">
+                        <label class="form-label">{{ form.description.label }}</label>
+                        <button type="button" id="generateBtn" class="btn-ai-inline">✨ Generate</button>
+                    </div>
+                    {{ form.description }}
+                    {% if form.description.errors %}<div class="text-danger small">{{ form.description.errors }}</div>{% endif %}
+                    <span id="generateStatus" class="ai-status"></span>
+                </div>
             </div>
-            <div class="form-field">
-                <label class="form-label">{{ form.price.label }}</label>
-                {{ form.price }}
-                {% if form.price.errors %}<div class="text-danger small">{{ form.price.errors }}</div>{% endif %}
-            </div>
-            <div class="form-field">
-                <label class="form-label">{{ form.stock.label }}</label>
-                {{ form.stock }}
-                {% if form.stock.errors %}<div class="text-danger small">{{ form.stock.errors }}</div>{% endif %}
-            </div>
-        </div>
-    </div>
 
-    <div class="form-section">
-        <div class="form-section-title">Listing Copy</div>
-        <div class="form-field">
-            <label class="form-label">{{ form.description.label }}</label>
-            {{ form.description }}
-            {% if form.description.errors %}<div class="text-danger small">{{ form.description.errors }}</div>{% endif %}
-            <button type="button" id="generateBtn" class="btn-ai mt-2">✨ Generate with AI</button>
-            <span id="generateStatus" class="ai-status"></span>
-        </div>
-    </div>
-
-    <div class="form-section">
-        <div class="form-section-title">Seller Input</div>
-        <div class="form-row form-row-2">
-            <div class="form-field">
-                <label class="form-label">{{ form.raw_notes.label }}</label>
-                {{ form.raw_notes }}
-                {% if form.raw_notes.errors %}<div class="text-danger small">{{ form.raw_notes.errors }}</div>{% endif %}
-                <div class="form-text">Rough seller notes — feeds the AI tools above.</div>
-            </div>
-            <div class="form-field">
-                <label class="form-label">{{ form.specs.label }}</label>
-                {{ form.specs }}
-                {% if form.specs.errors %}<div class="text-danger small">{{ form.specs.errors }}</div>{% endif %}
-                <div class="form-text">JSON format, e.g. {"RAM": "16GB"}</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-section">
-        <div class="form-section-title">Media &amp; Status</div>
-        <div class="form-row form-row-2 align-items-center">
-            <div class="form-field">
-                <label class="form-label">{{ form.image.label }}</label>
-                {{ form.image }}
-                {% if form.image.errors %}<div class="text-danger small">{{ form.image.errors }}</div>{% endif %}
-            </div>
-            <div class="form-field form-check-field">
-                {{ form.is_active }}
-                <label class="form-check-label">{{ form.is_active.label }}</label>
+            <div class="form-section">
+                <div class="form-section-title">Seller Input</div>
+                <div class="form-field">
+                    <label class="form-label">{{ form.raw_notes.label }}</label>
+                    {{ form.raw_notes }}
+                    {% if form.raw_notes.errors %}<div class="text-danger small">{{ form.raw_notes.errors }}</div>{% endif %}
+                    <div class="form-text">Rough seller notes — feeds the AI tools above.</div>
+                </div>
+                <div class="form-field">
+                    <label class="form-label">{{ form.specs.label }}</label>
+                    {{ form.specs }}
+                    {% if form.specs.errors %}<div class="text-danger small">{{ form.specs.errors }}</div>{% endif %}
+                    <div class="form-text">JSON format, e.g. {"RAM": "16GB"}</div>
+                </div>
             </div>
         </div>
     </div>
@@ -129,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 try {
                     specs = JSON.parse(specsText);
                 } catch (e) {
-                    status.textContent = 'Specs field has invalid JSON — fix or clear it first.';
+                    status.textContent = 'Specs field has invalid JSON.';
                     return;
                 }
             }
@@ -157,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     status.textContent = 'Done — review before saving.';
                 }
             } catch (err) {
-                status.textContent = 'Request failed. Is the AI service running?';
+                status.textContent = 'Request failed.';
             } finally {
                 btn.disabled = false;
                 btn.classList.remove('btn-ai-loading');
@@ -200,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     catStatus.textContent = data.confidence_note;
                 }
             } catch (err) {
-                catStatus.textContent = 'Request failed. Is the AI service running?';
+                catStatus.textContent = 'Request failed.';
             } finally {
                 catBtn.disabled = false;
                 catBtn.classList.remove('btn-ai-loading');

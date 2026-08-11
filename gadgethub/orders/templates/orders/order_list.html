@@ -12,7 +12,10 @@
             <td><span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span></td>
             <td class="mono">${{ order.total_price }}</td>
             <td class="text-muted">{{ order.created_at|date:"M d, Y H:i" }}</td>
-            <td><a href="{% url 'orders:detail' order.id %}" class="btn btn-sm btn-outline-ink">View</a></td>
+            <td>
+    <a href="{% url 'orders:track' order.id %}" class="btn btn-sm btn-accent">Track</a>
+    <a href="{% url 'orders:detail' order.id %}" class="btn btn-sm btn-outline-ink">Details</a>
+</td>
         </tr>
         {% endfor %}
     </tbody>

@@ -54,7 +54,14 @@ def checkout(request):
         return redirect('orders:detail', order_id=order.id)
 
     return redirect('orders:payment', order_id=order.id)
-
+@login_required
+def order_track(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    return render(request, 'orders/order_track.html', {
+        'order': order,
+        'status_flow': Order.STATUS_FLOW,
+        'current_step': order.get_status_step_index(),
+    })
 
 def _generate_transaction_id():
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=12))
