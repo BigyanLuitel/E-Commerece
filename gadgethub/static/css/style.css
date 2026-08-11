@@ -13,6 +13,14 @@ body {
     background-color: var(--paper);
     color: var(--ink);
      font-family: 'Work Sans', sans-serif;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    margin: 0;
+}
+
+.gh-page-content {
+    min-height: 0;
 }
 .gh-navbar {
     background-color: var(--panel);
@@ -417,7 +425,7 @@ body {
     background-color: var(--ink);
     color: #B9BEC8;
     padding: 3rem 0 1.5rem;
-    margin-top: 4rem;
+    margin-top: 0;
 }
 
 .footer-grid {

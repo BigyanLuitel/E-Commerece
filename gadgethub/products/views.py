@@ -45,3 +45,7 @@ def product_list(request):
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug, is_active=True)
     return render(request, 'products/product_detail.html', {'product': product})
+
+
+def help_center(request):
+    return render(request, 'help_center.html')

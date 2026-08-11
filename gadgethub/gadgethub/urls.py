@@ -28,6 +28,7 @@ urlpatterns = [
         path('dashboard/', include('dashboard.urls')),
 path('api/internal/', include('internal_api.urls')),
 path('chat/', include('chatbot.urls')),
+    path('help-center/', product_views.help_center, name='help_center'),
     path('', product_views.home, name='home'),
     path('products/', include('products.urls')),
 ]

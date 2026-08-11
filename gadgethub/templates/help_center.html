@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Help Center{% endblock %}
+{% block content %}
+<div class="py-4 py-md-5">
+    <div class="mb-4">
+        <h1 class="page-title mb-2">Help Center</h1>
+        <p class="page-sub mb-0">Find quick answers, order support, and contact details in one place. You can also ask the chat assistant for help anytime.</p>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-lg-4">
+            <div class="spec-card h-100">
+                <div class="spec-card-body">
+                    <div class="spec-tag mb-2">Orders</div>
+                    <h5 class="mb-2">Where is my order?</h5>
+                    <p class="page-sub mb-0">Go to <a href="{% url 'orders:list' %}" class="table-link">My Orders</a> to view status and open the tracking page for each order.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="spec-card h-100">
+                <div class="spec-card-body">
+                    <div class="spec-tag mb-2">Cart</div>
+                    <h5 class="mb-2">How do I update my cart?</h5>
+                    <p class="page-sub mb-0">Visit your <a href="{% url 'cart:detail' %}" class="table-link">Cart</a> to change quantities, remove items, or continue to checkout.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="spec-card h-100">
+                <div class="spec-card-body">
+                    <div class="spec-tag mb-2">Payments</div>
+                    <h5 class="mb-2">What payment methods are available?</h5>
+                    <p class="page-sub mb-0">At checkout you can choose eSewa, Khalti, card, or cash on delivery depending on the order flow shown in the cart.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="spec-card h-100">
+                <div class="spec-card-body">
+                    <div class="spec-tag mb-2">FAQ</div>
+                    <div class="mb-3">
+                        <h5 class="mb-1">How do I track an order?</h5>
+                        <p class="page-sub mb-0">Open <a href="{% url 'orders:list' %}" class="table-link">My Orders</a> and click Track for the order you want.</p>
+                    </div>
+                    <div class="mb-3">
+                        <h5 class="mb-1">Can I change shipping details after ordering?</h5>
+                        <p class="page-sub mb-0">If the order is still pending, contact support using the details on this page as soon as possible.</p>
+                    </div>
+                    <div>
+                        <h5 class="mb-1">What if an item is out of stock?</h5>
+                        <p class="page-sub mb-0">If stock changes before checkout, the cart will cap quantities at the available stock.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="spec-card h-100">
+                <div class="spec-card-body">
+                    <div class="spec-tag mb-2">Contact</div>
+                    <h5 class="mb-3">Need direct help?</h5>
+                    <p class="page-sub mb-2">Email: support@gadgethub.local</p>
+                    <p class="page-sub mb-2">Phone: +977 9800000000</p>
+                    <p class="page-sub mb-4">Hours: Mon-Sat, 10am-6pm</p>
+                    <a href="{% url 'products:list' %}" class="btn btn-accent">Browse Products</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

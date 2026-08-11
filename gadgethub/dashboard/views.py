@@ -1,6 +1,7 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render
 from django.db.models import Sum, Count
+from django.contrib.auth import get_user_model
 
 from products.models import Product
 from orders.models import Order
@@ -13,10 +14,21 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 import json
 
+User = get_user_model()
+
 @staff_member_required
 def product_list(request):
     products = Product.objects.all().order_by('-created_at')
     return render(request, 'dashboard/product_list.html', {'products': products})
+
+
+@staff_member_required
+def user_list(request):
+    users = User.objects.order_by('-date_joined')
+    return render(request, 'dashboard/user_list.html', {
+        'users': users,
+        'total_users': users.count(),
+    })
 
 
 @staff_member_required
@@ -60,6 +72,7 @@ def dashboard_home(request):
     total_products = Product.objects.count()
     active_products = Product.objects.filter(is_active=True).count()
     low_stock = Product.objects.filter(stock__lt=5, is_active=True).count()
+    total_users = User.objects.count()
 
     total_orders = Order.objects.count()
     revenue = (
@@ -73,6 +86,7 @@ def dashboard_home(request):
         'total_products': total_products,
         'active_products': active_products,
         'low_stock': low_stock,
+        'total_users': total_users,
         'total_orders': total_orders,
         'revenue': revenue,
         'recent_orders': recent_orders,
