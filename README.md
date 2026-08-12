@@ -1,91 +1,101 @@
 # GadgetHub
 
-An e-commerce platform for electronics, built with Django, with an AI layer for product automation and a conversational shopping assistant.
+GadgetHub is an electronics e-commerce project built with Django. It includes a storefront, shopping cart, order flow, admin dashboard, and a conversational AI assistant for customer support and product guidance.
 
-## What it does
+## Features
 
-- Browse, search, and buy electronics (smartphones, laptops, audio, gaming, etc.)
-- Cart, checkout, and simulated payment (eSewa, Khalti, Card, Cash on Delivery)
-- Staff dashboard to manage products and orders
-- AI tools for staff: auto-generate product descriptions and suggest categories
-- AI chatbot for customers: search products by natural language, add to cart, and place orders through conversation
+- Product catalog with categories such as smartphones, laptops, audio, wearables, and gaming
+- Search and filtering for products
+- Cart and checkout flow
+- Simulated payment options: eSewa, Khalti, card, and cash on delivery
+- Order tracking and order history
+- Staff dashboard for managing products, orders, and users
+- AI-powered staff tools for generating product descriptions and suggesting categories
+- Customer chat assistant for help and ordering support
+- Help Center page with support guidance and FAQs
 
 ## Tech Stack
 
-- **Backend:** Django, MySQL
-- **AI service:** FastAPI, LangGraph, OpenAI (gpt-4o-mini)
-- **Search:** ChromaDB (vector search for the chatbot)
-- **Frontend:** HTML, CSS, JavaScript (no framework)
+- Backend: Django
+- Database: PostgreSQL (configured in the project settings)
+- Frontend: HTML, CSS, JavaScript, Bootstrap
+- Authentication: Django custom user model
+- AI integration: external service running on localhost:8010
 
 ## Project Structure
 
-```
-gadgethub/          → Django app (main website + dashboard)
-ai-service/          → FastAPI app (AI chatbot + tools)
+```text
+gadgethub/
+├── accounts/
+├── cart/
+├── chatbot/
+├── dashboard/
+├── gadgethub/
+├── internal_api/
+├── orders/
+├── products/
+├── static/
+├── templates/
+├── manage.py
+├── requirements.txt
+└── .env
 ```
 
 ## Setup
 
-### 1. Django app
+### 1. Create and activate a virtual environment
 
 ```bash
-cd gadgethub
-python -m venv venv
-venv\Scripts\activate          # or source venv/bin/activate on Mac/Linux
+cd d:\CollegeProjects\E-Commerece
+python -m venv .venv
+.venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-Create a `.env` file in the `gadgethub` folder:
+### 2. Configure environment variables
 
-```
-INTERNAL_API_KEY=<a random secret string>
+Create a `.env` file inside the `gadgethub` folder with values such as:
+
+```env
+DB_PASSWORD=your_database_password
+HOST=your_database_host
+PORT=your_database_port
+INTERNAL_API_KEY=your_internal_api_key
 AI_SERVICE_URL=http://localhost:8010
 ```
 
-Set up the database, then run:
+### 3. Run database setup
 
 ```bash
+cd gadgethub
 python manage.py migrate
-python manage.py seed_products
 python manage.py createsuperuser
 python manage.py runserver
 ```
 
-Visit `http://localhost:8000`
+Then open:
 
-### 2. AI service
+- Storefront: http://localhost:8000
+- Admin dashboard: http://localhost:8000/dashboard/
 
-```bash
-cd ai-service
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-```
+## Optional AI service
 
-Create a `.env` file in the `ai-service` folder:
+The app is designed to use an external AI service on `http://localhost:8010` for features like product description generation, category suggestion, and chat assistance.
 
-```
-OPENAI_API_KEY=<your OpenAI key>
-DJANGO_INTERNAL_API_URL=http://localhost:8000/api/internal
-DJANGO_INTERNAL_API_KEY=<same value as INTERNAL_API_KEY above>
-```
+If that service is not running, the core storefront and dashboard still work, but AI-powered features will not be available.
 
-Build the product search index, then run the service:
+## Main User Flows
 
-```bash
-python build_index.py
-uvicorn main:app --reload --port 8010
-```
-
-**Both servers need to be running at the same time** for the AI features (description generator, category suggester, chatbot) to work.
-
-## Using It
-
-- **Shop:** go to `http://localhost:8000`, sign up, and browse
-- **Chat with the assistant:** click the chat bubble (bottom-right) after logging in
-- **Staff dashboard:** log in with a superuser account, go to `http://localhost:8000/dashboard/`
+- Browse products from the home page and product listing pages
+- Add products to the cart
+- Proceed to checkout and choose a payment method
+- View and track orders from the order history page
+- Use the chat assistant for product and support help
+- Access the Help Center for FAQs and support options
+- Log in to the dashboard as a staff/superuser to manage products, orders, and users
 
 ## Notes
 
-- Payment is simulated — no real money moves, no real payment gateway is connected
-- The AI service must be running for the "Generate with AI" buttons and chatbot to work; if it's off, the rest of the site still works normally
+- Payment is simulated for this project and is not connected to a real payment provider.
+- The project uses a custom user model based on email login.
+- Passwords are not exposed in dashboard user views.
