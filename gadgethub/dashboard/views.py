@@ -13,6 +13,11 @@ import requests
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 import json
+from datetime import timedelta
+from django.utils import timezone
+from django.db.models import Sum, Count, F
+from django.db.models.functions import TruncDate
+from orders.models import Order, OrderItem
 
 User = get_user_model()
 
@@ -72,9 +77,7 @@ def dashboard_home(request):
     total_products = Product.objects.count()
     active_products = Product.objects.filter(is_active=True).count()
     low_stock = Product.objects.filter(stock__lt=5, is_active=True).count()
-    total_users = User.objects.count()
 
-    total_orders = Order.objects.count()
     revenue = (
         Order.objects.filter(status=Order.STATUS_PAID)
         .aggregate(total=Sum('items__price'))['total'] or 0
@@ -82,14 +85,61 @@ def dashboard_home(request):
 
     recent_orders = Order.objects.select_related('user').order_by('-created_at')[:5]
 
+    # --- Chart 1: Revenue over the last 14 days ---
+    cutoff = timezone.now() - timedelta(days=14)
+    daily_revenue = (
+        Order.objects.filter(status=Order.STATUS_PAID, created_at__gte=cutoff)
+        .annotate(day=TruncDate('created_at'))
+        .values('day')
+        .annotate(total=Sum('items__price'))
+        .order_by('day')
+    )
+    revenue_labels = [d['day'].strftime('%b %d') for d in daily_revenue]
+    revenue_values = [float(d['total'] or 0) for d in daily_revenue]
+
+    # --- Chart 2: Orders by status ---
+    status_counts = (
+        Order.objects.values('status')
+        .annotate(count=Count('id'))
+        .order_by('status')
+    )
+    status_labels = [dict(Order.STATUS_CHOICES).get(s['status'], s['status']) for s in status_counts]
+    status_values = [s['count'] for s in status_counts]
+
+    # --- Chart 3: Top 5 selling products (by quantity sold) ---
+    top_products = (
+        OrderItem.objects.values('product_name')
+        .annotate(total_qty=Sum('quantity'))
+        .order_by('-total_qty')[:5]
+    )
+    top_product_labels = [p['product_name'] for p in top_products]
+    top_product_values = [p['total_qty'] for p in top_products]
+
+    # --- Chart 4: Stock levels by category ---
+    stock_by_category = (
+        Product.objects.filter(is_active=True)
+        .values('category')
+        .annotate(total_stock=Sum('stock'))
+        .order_by('category')
+    )
+    category_labels_map = dict(Product.CATEGORY_CHOICES)
+    stock_labels = [category_labels_map.get(c['category'], c['category'] or 'Uncategorized') for c in stock_by_category]
+    stock_values = [c['total_stock'] or 0 for c in stock_by_category]
+
     return render(request, 'dashboard/home.html', {
         'total_products': total_products,
         'active_products': active_products,
         'low_stock': low_stock,
-        'total_users': total_users,
-        'total_orders': total_orders,
         'revenue': revenue,
         'recent_orders': recent_orders,
+        'revenue_labels': json.dumps(revenue_labels),
+        'revenue_values': json.dumps(revenue_values),
+        'status_labels': json.dumps(status_labels),
+        'status_values': json.dumps(status_values),
+        'top_product_labels': json.dumps(top_product_labels),
+        'top_product_values': json.dumps(top_product_values),
+        'stock_labels': json.dumps(stock_labels),
+        'stock_values': json.dumps(stock_values),
     })
     
 @staff_member_required

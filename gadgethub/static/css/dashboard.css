@@ -382,3 +382,19 @@
         grid-template-columns: 1fr;
     }
 }
+
+.chart-card {
+    background-color: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.25rem;
+    height: 100%;
+}
+.chart-card-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    margin-bottom: 1rem;
+}
