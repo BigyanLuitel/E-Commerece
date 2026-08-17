@@ -50,6 +50,38 @@
     border-top: 1px solid var(--line);
 }
 
+.chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background-color: var(--panel);
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.chip:hover {
+    border-color: var(--accent);
+    background-color: #EAF1FE;
+    color: var(--ink);
+}
+
+.chip-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
 .trust-item {
     display: flex;
     align-items: center;
@@ -84,15 +116,13 @@
 }
 
 .hero-img {
-    position: relative;
-    z-index: 1;
     width: 100%;
-    height: 420px;
-    object-fit: cover;
-    border-radius: 16px;
-    box-shadow: 0 20px 40px rgba(20, 23, 31, 0.12);
+    height: auto;
+    max-height: 480px;
+    object-fit: contain;
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at center, black 55%, transparent 100%);
+    mask-image: radial-gradient(ellipse 70% 70% at center, black 55%, transparent 100%);
 }
-
 .spec-strip {
     background-color: var(--paper);
     padding: 1rem 0 2.5rem;
@@ -210,5 +240,64 @@
     }
     .spec-box {
         padding: 1.25rem 1rem;
+    }
+}
+.trust-card {
+    display: flex;
+    margin-top: 2rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    background-color: var(--panel);
+}
+
+.trust-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.6rem;
+    padding: 1.5rem 1rem;
+    border-right: 1px solid var(--line);
+}
+.trust-col:last-child {
+    border-right: none;
+}
+
+.trust-badge {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #EAF1FE, #D6E4FD);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trust-col span {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.35;
+}
+
+.btn-accent {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+@media (max-width: 768px) {
+    .trust-card {
+        flex-direction: column;
+    }
+    .trust-col {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+    }
+    .trust-col:last-child {
+        border-bottom: none;
     }
 }

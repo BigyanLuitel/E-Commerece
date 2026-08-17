@@ -1,12 +1,12 @@
 :root {
-    --paper: #EDEFF2;
+    --paper: #EEF1F6;
     --panel: #FFFFFF;
-    --ink: #14171F;
-    --muted: #5B6472;
-    --accent: #F2A900;
-    --accent-dark: #C98800;
-    --teal: #0F9D8E;
-    --line: #D7DBE0;
+    --ink: #1C222E;
+    --muted: #64748B;
+    --accent: #2F6FED;
+    --accent-dark: #1D4ED8;
+    --teal: #06B6D4;
+    --line: #DCE1E8;
 }
 
 body {
@@ -108,15 +108,14 @@ body {
 .btn-accent {
     background-color: var(--accent);
     border-color: var(--accent);
-    color: var(--ink);
+    color: #FFFFFF;
     font-weight: 600;
 }
 .btn-accent:hover {
     background-color: var(--accent-dark);
     border-color: var(--accent-dark);
-    color: var(--ink);
+    color: #FFFFFF;
 }
-
 .btn-outline-ink {
     border: 1px solid var(--ink);
     color: var(--ink);

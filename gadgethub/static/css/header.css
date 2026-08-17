@@ -108,7 +108,7 @@
     position: absolute;
     top: -6px;
     right: 40px;
-    background-color: var(--accent);
+    background-color: #FFFFFF;
     color: var(--ink);
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.65rem;

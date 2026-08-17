@@ -61,7 +61,7 @@
     color: #fff;
 }
 .dash-link.active {
-    background-color: var(--accent);
+    background-color: #FFFFFF;
     color: var(--ink);
     font-weight: 600;
 }
@@ -207,9 +207,9 @@
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    background: linear-gradient(135deg, #FFF3D6, #FFE7AD);
-    border: 1px solid #E8B93D;
-    color: #7A5A00;
+    background: linear-gradient(135deg, #DCE9FE, #BFD7FE);
+    border: 1px solid #7EA8F5;
+    color: #1D4ED8;
     font-size: 0.82rem;
     font-weight: 600;
     padding: 0.4rem 0.85rem;
@@ -398,3 +398,4 @@
     color: var(--muted);
     margin-bottom: 1rem;
 }
+.status-pending { background-color: #FEF3C7; color: #92400E; }
