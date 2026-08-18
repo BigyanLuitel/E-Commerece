@@ -38,7 +38,7 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
             <div class="stat-label">Revenue (Paid)</div>
-            <div class="stat-value mono">${{ revenue }}</div>
+            <div class="stat-value mono">Rs.{{ revenue }}</div>
         </div>
     </div>
 </div>
@@ -87,7 +87,7 @@
                 </div>
             </td>
             <td><span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span></td>
-            <td class="mono">${{ order.total_price }}</td>
+            <td class="mono">Rs.{{ order.total_price }}</td>
             <td class="text-muted">{{ order.created_at|date:"M d, Y H:i" }}</td>
         </tr>
         {% empty %}
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
         data: {
             labels: {{ revenue_labels|safe }},
             datasets: [{
-                label: 'Revenue ($)',
+                label: 'Revenue (Rs.)',
                 data: {{ revenue_values|safe }},
                 borderColor: accent,
                 backgroundColor: 'rgba(242, 169, 0, 0.12)',
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     callbacks: {
                         label: (ctx) => {
                             const pct = ((ctx.raw / statusTotal) * 100).toFixed(1);
-                            return ` ${ctx.label}: ${ctx.raw} (${pct}%)`;
+                            return ` Rs.{ctx.raw} ({pct}%)`;
                         }
                     }
                 }

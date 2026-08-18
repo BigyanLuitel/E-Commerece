@@ -14,7 +14,7 @@
                 {% for item in items %}
                 <tr>
                     <td><a href="{% url 'products:detail' item.product.slug %}" class="table-link">{{ item.product.name }}</a></td>
-                    <td class="mono">${{ item.product.price }}</td>
+                    <td class="mono">Rs.{{ item.product.price }}</td>
                     <td style="max-width:150px;">
                         <form method="post" action="{% url 'cart:update' item.id %}" class="d-flex gap-1">
                             {% csrf_token %}
@@ -22,7 +22,7 @@
                             <button type="submit" class="btn btn-sm btn-outline-ink">Update</button>
                         </form>
                     </td>
-                    <td class="mono">${{ item.subtotal }}</td>
+                    <td class="mono">Rs.{{ item.subtotal }}</td>
                     <td>
                         <form method="post" action="{% url 'cart:remove' item.id %}">
                             {% csrf_token %}
@@ -37,7 +37,7 @@
 
     <div class="cart-summary-col">
         <div class="checkout-panel">
-            <h4 class="mono mb-3">Total: ${{ cart.total_price }}</h4>
+            <h4 class="mono mb-3">Total: Rs.{{ cart.total_price }}</h4>
             <form method="post" action="{% url 'orders:checkout' %}">
                 {% csrf_token %}
                 <label class="form-label">Shipping Address</label>

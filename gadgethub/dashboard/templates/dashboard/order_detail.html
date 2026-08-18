@@ -12,14 +12,14 @@
                 {% for item in order.items.all %}
                 <tr>
                     <td>{{ item.product_name }}</td>
-                    <td class="mono">${{ item.price }}</td>
+                    <td class="mono">Rs.{{ item.price }}</td>
                     <td>{{ item.quantity }}</td>
-                    <td class="mono">${{ item.subtotal }}</td>
+                    <td class="mono">Rs.{{ item.subtotal }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <h4 class="mono">Total: ${{ order.total_price }}</h4>
+        <h4 class="mono">Total: Rs.{{ order.total_price }}</h4>
     </div>
 
     <div class="col-md-4">

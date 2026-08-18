@@ -19,7 +19,7 @@
             <td>{{ product.name }}</td>
             <td>{{ product.get_category_display|default:"—" }}</td>
             <td>{{ product.brand|default:"—" }}</td>
-            <td class="mono">${{ product.price }}</td>
+            <td class="mono">Rs.{{ product.price }}</td>
             <td class="mono {% if product.stock < 5 %}text-danger{% endif %}">{{ product.stock }}</td>
             <td>
                 {% if product.is_active %}

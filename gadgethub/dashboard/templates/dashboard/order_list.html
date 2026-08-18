@@ -21,7 +21,7 @@
             <td class="mono">#{{ order.id }}</td>
             <td>{{ order.user.email }}</td>
             <td><span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span></td>
-            <td class="mono">${{ order.total_price }}</td>
+            <td class="mono">Rs.{{ order.total_price }}</td>
             <td class="text-muted">{{ order.created_at|date:"M d, Y H:i" }}</td>
             <td><a href="{% url 'dashboard:order_detail' order.pk %}" class="btn btn-sm btn-outline-ink">View</a></td>
         </tr>

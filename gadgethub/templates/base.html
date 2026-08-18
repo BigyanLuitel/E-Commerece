@@ -50,7 +50,7 @@
                         {% if request.user.cart.total_items %}
                         <span class="cart-badge">{{ request.user.cart.total_items }}</span>
                         {% endif %}
-                        <span class="cart-total d-none d-md-inline">${{ request.user.cart.total_price|default:"0.00" }}</span>
+                        <span class="cart-total d-none d-md-inline">Rs.{{ request.user.cart.total_price|default:"0.00" }}</span>
                     </a>
                     <form method="post" action="{% url 'accounts:logout' %}" class="d-none d-md-block">
                         {% csrf_token %}
